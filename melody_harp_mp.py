@@ -9,7 +9,6 @@ from collections import deque
 import pyautogui as pag
 import ctypes
 
-print('hello')
 
 def capture_screen(capture):
     i=0
@@ -44,7 +43,7 @@ def click():
             while not clicked:
                 sct_img = sct.grab(mhs.box)
                 img = np.array(sct_img)
-                bright = np.mean(img[4:mhs.size,loc-mhs.size//2:loc+mhs.size//2,:3])
+                bright = np.mean(img[4:4+mhs.size,loc-mhs.size//2:loc+mhs.size//2,:3])
                 if bright>230:
                     pag.leftClick(mhs.click_loc[idx], 488)
                     clicked = True
@@ -130,7 +129,7 @@ def main():
     mhs.write_queue = mhs.ctx.SimpleQueue()
     user_action_proc = mhs.ctx.Process(target=user_action_process, args=(mhs.write_queue,mhs.capture), daemon=True)
     user_action_proc.start()
-    mhs.ctx.Process(target=write_file, args=(mhs.write_queue,), daemon=True).start()
+    # mhs.ctx.Process(target=write_file, args=(mhs.write_queue,), daemon=True).start()
     mhs.ctx.Process(target=capture_screen, args=(mhs.capture,), daemon=True).start()
 
     user_action_proc.join()

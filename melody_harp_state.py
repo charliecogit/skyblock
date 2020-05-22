@@ -1,34 +1,28 @@
 from collections import deque
 import numpy as np
 
-check_loc = np.array([ 33,  87, 141, 196, 249, 303, 357], dtype=np.int32)
-click_loc = check_loc + 764
-filled = np.array([False]*check_loc.size)
+filled = np.array([False]*7)
 ctrl = False
 stop = False
 
-
 monitor_number = 1
 
-size = 6
+size = 54
 box = {
-    "top": 470,
-    "left": 764,
-    "width": 373,
-    "height": 50,
+    "top": 414,
+    "left": 784,
+    "width": size*6+1,
+    "height": 1,
     "mon": monitor_number,
 }
 n_frames=0
 
-write_queue = None
-writing = None
 
-learning = False
+detecting = False
 write_file_proc = None
 
-click_idx_deque = deque()
+click_queue = None
+wait_time = 0.2
 
 capture = None
 
-import multiprocessing as mp
-ctx = mp.get_context('spawn')
